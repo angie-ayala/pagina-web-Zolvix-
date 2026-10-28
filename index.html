@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiciMap | Zolvix</title>
+  <style>
+    :root { --verde:#16845b; --verde-oscuro:#07563d; --menta:#e8f7ef; --texto:#17372d; --gris:#64756e; --blanco:#fff; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--texto); background:#f7fbf8; }
+    header { background:var(--blanco); border-bottom:1px solid #e1eee6; position:sticky; top:0; z-index:5; }
+    .nav { max-width:1120px; margin:auto; padding:16px 22px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:22px; color:var(--verde-oscuro); }
+    .logo { width:42px; height:42px; border-radius:14px; display:grid; place-items:center; color:white; background:var(--verde); font-size:24px; }
+    nav { display:flex; flex-wrap:wrap; gap:16px; }
+    nav a { color:var(--texto); text-decoration:none; font-size:14px; font-weight:700; }
+    nav a:hover { color:var(--verde); }
+    .hero { background:linear-gradient(120deg,#e5f8ec,#f8fffa); }
+    .hero-inner { max-width:1120px; margin:auto; padding:68px 22px 60px; display:grid; grid-template-columns:1.2fr .8fr; gap:38px; align-items:center; }
+    .eyebrow { color:var(--verde); text-transform:uppercase; letter-spacing:2px; font-size:12px; font-weight:800; }
+    h1 { font-size:clamp(40px,6vw,66px); line-height:1.03; margin:14px 0; letter-spacing:-2px; }
+    h1 span { color:var(--verde); }
+    .hero p { color:var(--gris); font-size:18px; line-height:1.7; max-width:590px; }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:25px; }
+    .btn { border:0; border-radius:12px; padding:13px 18px; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; font-size:14px; }
+    .primary { background:var(--verde); color:white; }
+    .secondary { background:white; color:var(--verde-oscuro); border:1px solid #cde6d6; }
+    .bike-art { min-height:280px; border-radius:28px; background:var(--verde); display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; padding:30px; text-align:center; box-shadow:0 20px 45px #0b5b3b20; }
+    .bike-art .bike { font-size:112px; line-height:1.2; }
+    .bike-art strong { font-size:24px; }
+    .bike-art small { margin-top:8px; opacity:.85; }
+    section { max-width:1120px; margin:auto; padding:62px 22px; }
+    .section-head { text-align:center; margin-bottom:30px; }
+    .section-head h2 { font-size:34px; margin:8px 0; }
+    .section-head p { color:var(--gris); line-height:1.6; }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .card { background:white; border:1px solid #e1eee6; border-radius:18px; padding:23px; box-shadow:0 8px 25px #16483208; }
+    .card .emoji { width:48px; height:48px; border-radius:14px; background:var(--menta); display:grid; place-items:center; font-size:25px; }
+    .card h3 { margin:16px 0 8px; }
+    .card p { margin:0; color:var(--gris); line-height:1.6; font-size:14px; }
+    .map-section { background:#eaf7ef; max-width:none; }
+    .map-wrap { max-width:1076px; margin:auto; }
+    .map-panel { background:white; border:1px solid #cfe7d8; border-radius:20px; overflow:hidden; }
+    .map-top { padding:18px 20px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+    .map-top h3 { margin:0; }
+    .map-placeholder { min-height:260px; background-color:#dff1e5; background-image:linear-gradient(35deg,transparent 47%,#fff 48%,#fff 51%,transparent 52%),linear-gradient(120deg,transparent 46%,#b7dfc6 47%,#b7dfc6 49%,transparent 50%),linear-gradient(90deg,transparent 48%,#fff 49%,#fff 51%,transparent 52%); background-size:170px 130px,230px 180px,120px 120px; display:grid; place-items:center; padding:24px; text-align:center; }
+    .map-message { background:white; border-radius:16px; padding:18px 22px; max-width:440px; box-shadow:0 8px 22px #16483212; }
+    .map-message strong { display:block; margin-bottom:7px; }
+    .map-message p { color:var(--gris); font-size:13px; line-height:1.5; margin:0; }
+    .map-bottom { display:flex; flex-wrap:wrap; gap:10px; padding:16px 20px; }
+    .tag { background:var(--menta); color:var(--verde-oscuro); padding:8px 11px; border-radius:99px; font-size:12px; font-weight:700; }
+    .contact { text-align:center; }
+    .contact-box { background:var(--verde-oscuro); color:white; border-radius:24px; padding:36px 24px; }
+    .contact-box p { color:#d7eee2; line-height:1.6; }
+    footer { background:#063d2c; color:#d7eee2; padding:24px; text-align:center; font-size:13px; }
+    footer strong { color:white; }
+    @media(max-width:760px) { .hero-inner { grid-template-columns:1fr; padding-top:45px; } .cards { grid-template-columns:1fr; } .nav { align-items:flex-start; flex-direction:column; } nav { gap:12px; } .bike-art { min-height:220px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand"><div class="logo">🚲</div><div>ZOLVIX <span style="display:block;font-size:11px;letter-spacing:2px;color:#16845b">BICIMAP</span></div></div>
+      <nav aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a><a href="#funciones">Funciones</a><a href="#mapa">Mapa</a><a href="#nosotros">Nosotros</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="hero" id="inicio">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">Una idea de Zolvix</div>
+          <h1>Muévete por Bogotá <span>en bici.</span></h1>
+          <p>BiciMap te ayuda a organizar tus recorridos en bicicleta, descubrir puntos importantes y planear una movilidad más práctica y sostenible.</p>
+          <div class="actions"><a class="btn primary" href="#funciones">Descubrir funciones</a><a class="btn secondary" href="#mapa">Explorar el mapa</a></div>
+        </div>
+        <div class="bike-art"><div class="bike">🚲</div><strong>Tu ciudad, a tu ritmo</strong><small>Conecta tus rutas con BiciMap</small></div>
+      </div>
+    </div>
+    <section id="funciones">
+      <div class="section-head"><div class="eyebrow">Todo en un solo lugar</div><h2>¿Qué puedes hacer con BiciMap?</h2><p>Herramientas pensadas para facilitar tus recorridos por la ciudad.</p></div>
+      <div class="cards">
+        <article class="card"><div class="emoji">🗺️</div><h3>Rutas en bici</h3><p>Organiza tus recorridos y consulta información que te ayude a preparar tu viaje.</p></article>
+        <article class="card"><div class="emoji">📍</div><h3>Estaciones y puntos importantes</h3><p>Ten presentes los lugares de interés y las estaciones que quieras ubicar en tu recorrido.</p></article>
+        <article class="card"><div class="emoji">⭐</div><h3>Favoritos</h3><p>Guarda tus lugares preferidos para encontrarlos fácilmente cuando los necesites.</p></article>
+        <article class="card"><div class="emoji">📅</div><h3>Planificaciones</h3><p>Prepara tus próximos recorridos y organiza tus actividades con anticipación.</p></article>
+        <article class="card"><div class="emoji">🎉</div><h3>Eventos</h3><p>Consulta y comparte información de actividades relacionadas con la bicicleta.</p></article>
+        <article class="card"><div class="emoji">📝</div><h3>Reportes</h3><p>Registra observaciones sobre tus recorridos para contribuir a una mejor experiencia ciclista.</p></article>
+      </div>
+    </section>
+    <div class="map-section" id="mapa"><div class="map-wrap" style="padding:0 22px">
+      <div class="section-head" style="padding-top:58px"><div class="eyebrow">Planea tu recorrido</div><h2>Explora Bogotá en bicicleta</h2><p>Una vista de ejemplo para representar el mapa de BiciMap.</p></div>
+      <div class="map-panel"><div class="map-top"><h3>Mapa de BiciMap</h3><span class="tag">Bogotá, Colombia</span></div><div class="map-placeholder"><div class="map-message"><strong>📍 Tu próximo recorrido comienza aquí</strong><p>Esta sección es una maqueta visual. Para mostrar calles, estaciones y rutas reales se debe integrar un servicio de mapas.</p></div></div><div class="map-bottom"><span class="tag">🚲 Rutas en bici</span><span class="tag">📍 Estaciones</span><span class="tag">⭐ Favoritos</span><span class="tag">🌿 Movilidad sostenible</span></div></div>
+    </div></div>
+    <section class="contact" id="nosotros"><div class="contact-box"><div class="eyebrow" style="color:#9be0b8">Conoce nuestro proyecto</div><h2>Zolvix presenta BiciMap</h2><p>Queremos aportar a una ciudad más conectada, donde las personas puedan organizar mejor sus recorridos y disfrutar la bicicleta como alternativa de movilidad.</p><a class="btn secondary" href="#inicio">Volver al inicio ↑</a></div></section>
+  </main>
+  <footer><strong>ZOLVIX · BiciMap</strong><br>Movilidad más práctica, conectada y sostenible en Bogotá.</footer>
+</body>
+</html>
